@@ -5,15 +5,14 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from IPython.display import clear_output
-# from six.moves import urllib
+from six.moves import urllib
 import tensorflow.compat.v2.feature_column as fc
 
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 import tensorflow as tf  # now import the tensorflow module
 
-
-def make_input_fn(data_df, label_df, num_epochs=10, shuffle=True, batch_size=32):
+def make_input_fn(data_df, label_df, num_epochs=10000, shuffle=True, batch_size=32):
     def input_function():  # inner function, this will be returned
         ds = tf.data.Dataset.from_tensor_slices(
             (dict(data_df), label_df))  # create tf.data.Dataset object with data and its label
@@ -25,9 +24,8 @@ def make_input_fn(data_df, label_df, num_epochs=10, shuffle=True, batch_size=32)
 
     return input_function  # return a function object for use
 
-def calculateLinearRegreassion(name):
+def calculateLinearRegression():
     # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
     print(tf.version)  # make sure the version is 2.x
     print(tf.__version__)
     # Load dataset.
@@ -72,5 +70,5 @@ def calculateLinearRegreassion(name):
     # dftrain.sex.value_counts().plot(kind='barh')
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    calculateLinearRegreassion('PyCharm')
+    calculateLinearRegression()
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
