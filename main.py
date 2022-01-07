@@ -1,5 +1,6 @@
 # This is a sample Python script.
 from __future__ import absolute_import, division, print_function, unicode_literals
+from flask import Flask
 
 import numpy as np
 import pandas as pd
@@ -11,7 +12,7 @@ import tensorflow.compat.v2.feature_column as fc
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 import tensorflow as tf  # now import the tensorflow module
-
+app = Flask(__name__)
 def make_input_fn(data_df, label_df, num_epochs=100, shuffle=True, batch_size=32):
     def input_function():  # inner function, this will be returned
         ds = tf.data.Dataset.from_tensor_slices(
@@ -61,6 +62,8 @@ def calculateLinearRegression():
     print(probs)
     probs.plot(kind='hist', bins=20, title='predicted probabilities')
     plt.show()
+    # plt.savefig('plot.png', dpi=300, bbox_inches='tight')
+    # return probs
     # print(dftrain.shape)
     # print(dftrain.describe)
     # print(dftrain.head)
@@ -68,7 +71,11 @@ def calculateLinearRegression():
     # print(y_eval.head)
     # dftrain.age.hist(bins=20)
     # dftrain.sex.value_counts().plot(kind='barh')
-# Press the green button in the gutter to run the script.
+
+@app.route("/")
+def hello_world():
+    print(__name__)
+
 if __name__ == '__main__':
     calculateLinearRegression()
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    # return "<p>Hello, World!</p>"
