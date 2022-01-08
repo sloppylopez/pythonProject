@@ -13,6 +13,7 @@ The network is trained to be able to recognize and translate hand-written
 ###Useful Links
 
 https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.html#pandas.DataFrame.plot
+
 https://stackoverflow.com/questions/23333815/is-there-edit-and-continue-in-pycharm-reload-code-into-running-program-like-i
 
 ###Pitfalls
@@ -22,4 +23,5 @@ https://stackoverflow.com/questions/44649449/brew-installation-of-python-3-6-1-s
 ###Credits and Inspiration
 
 https://www.youtube.com/watch?v=wQ8BIBpya2k
+
 https://www.youtube.com/watch?v=qFJeN9V1ZsI
