@@ -18,6 +18,8 @@ https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.html#pandas.D
 
 https://stackoverflow.com/questions/23333815/is-there-edit-and-continue-in-pycharm-reload-code-into-running-program-like-i
 
+https://dev.to/divporter/deploying-a-flask-app-to-aws-lambda-5em0
+
 ###Pitfalls
 
 https://stackoverflow.com/questions/44649449/brew-installation-of-python-3-6-1-ssl-certificate-verify-failed-certificate/44649450#44649450
