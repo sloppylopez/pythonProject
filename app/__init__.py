@@ -1,8 +1,7 @@
 from flask import Flask
-
-# Init flask
 from app.linearRegressionService import calculateLinearRegression, trainLinearRegression
 
+# Init flask
 app = Flask(__name__)
 
 @app.route("/")
@@ -13,4 +12,3 @@ def hello_world():
 if __name__ == '__main__':
     trainLinearRegression()
     app.run()
-
