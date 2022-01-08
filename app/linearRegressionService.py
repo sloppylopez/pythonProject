@@ -4,7 +4,9 @@ from IPython.display import clear_output
 import pandas as pd
 import matplotlib.pyplot as plt
 import tensorflow as tf  # now import the tensorflow module
+import os
 
+basedir = os.path.abspath(os.path.dirname(__file__))
 # Load dataset.
 dftrain = pd.read_csv('http://storage.googleapis.com/tf-datasets/titanic/train.csv')  # training data
 dfeval = pd.read_csv('http://storage.googleapis.com/tf-datasets/titanic/eval.csv')  # testing data
@@ -53,5 +55,5 @@ def calculateLinearRegression():
     pred_dicts = list(linear_est.predict(eval_input_fn))
     probs = pd.Series([pred['probabilities'][1] for pred in pred_dicts])
     probs.plot(kind='hist', bins=20, title='predicted probabilities')
+    plt.savefig(basedir + '/static/images/new_plot.png')
     plt.show()
-    return probs
