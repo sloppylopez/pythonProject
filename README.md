@@ -1,6 +1,6 @@
 ###Description
 
-Hello world project with ML using tensorflow, it calculates the probability of surviving in the 
+Hello world project with ML using Tensorflow, Flash and Python3, it calculates the probability of surviving in the 
 Titanic by age using linear regression as estimator
 
 ###Init Project
