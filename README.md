@@ -5,9 +5,11 @@ Hello world project with ML using Tensorflow, Flash and Python3
 ###Services
 
 ####Linear Regression: 
+
 It calculates the probability of surviving in the Titanic by age using linear regression as estimator
 
 ####Deep Neural Network: 
+
 The network is trained to be able to recognize and translate handwritten images of numbers into digits
 
 ###Useful Links
