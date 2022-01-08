@@ -54,6 +54,8 @@ def calculateLinearRegression():
     print(f'accuracy of the result {result["accuracy"]}')
     pred_dicts = list(linear_est.predict(eval_input_fn))
     probs = pd.Series([pred['probabilities'][1] for pred in pred_dicts])
-    probs.plot(kind='hist', bins=20, title='predicted probabilities')
+    colors = ['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'y', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b']
+    probs.plot(kind='hist', bins=20, title='predicted probabilities to survive in the Titanic by age', colors=colors)
+    # seaborn.barplot(probs.index, probs.values)
     plt.savefig(basedir + '/static/images/new_plot.png')
     plt.show()
