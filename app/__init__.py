@@ -11,9 +11,28 @@ from IPython.display import clear_output
 from six.moves import urllib
 import tensorflow.compat.v2.feature_column as fc
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 import tensorflow as tf  # now import the tensorflow module
+# Init flask
+app = Flask(__name__)
+
+# Load dataset.
+dftrain = pd.read_csv('http://storage.googleapis.com/tf-datasets/titanic/train.csv')  # training data
+dfeval = pd.read_csv('http://storage.googleapis.com/tf-datasets/titanic/eval.csv')  # testing data
+y_train = dftrain.pop('survived')
+y_eval = dfeval.pop('survived')
+CATEGORICAL_COLUMNS = ['sex', 'n_siblings_spouses', 'parch', 'class', 'deck',
+                       'embark_town', 'alone']
+NUMERIC_COLUMNS = ['age', 'fare']
+# Create columns
+feature_columns = []
+for feature_name in CATEGORICAL_COLUMNS:
+    vocabulary = dftrain[feature_name].unique()  # gets a list of all unique values from given feature column
+    feature_columns.append(tf.feature_column.categorical_column_with_vocabulary_list(feature_name, vocabulary))
+
+for feature_name in NUMERIC_COLUMNS:
+    feature_columns.append(tf.feature_column.numeric_column(feature_name, dtype=tf.float32))
+
+print(feature_columns)
 
 def make_input_fn(data_df, label_df, num_epochs=100, shuffle=True, batch_size=32):
     def input_function():  # inner function, this will be returned
@@ -26,37 +45,19 @@ def make_input_fn(data_df, label_df, num_epochs=100, shuffle=True, batch_size=32
         return ds  # return a batch of the dataset
 
     return input_function  # return a function object for use
+# Create stimator
+train_input_fn = make_input_fn(dftrain,y_train)  # here we will call the input_function that was returned to us to get a dataset object we can feed to the model
+eval_input_fn = make_input_fn(dfeval, y_eval, num_epochs=1, shuffle=False)
+linear_est = tf.estimator.LinearClassifier(feature_columns=feature_columns)
 
-def calculateLinearRegression():
+def trainLinearRegression():
     # Use a breakpoint in the code line below to debug your script.
     print(tf.version)  # make sure the version is 2.x
     print(tf.__version__)
-    # Load dataset.
-    dftrain = pd.read_csv('http://storage.googleapis.com/tf-datasets/titanic/train.csv')  # training data
-    dfeval = pd.read_csv('http://storage.googleapis.com/tf-datasets/titanic/eval.csv')  # testing data
-    y_train = dftrain.pop('survived')
-    y_eval = dfeval.pop('survived')
-    CATEGORICAL_COLUMNS = ['sex', 'n_siblings_spouses', 'parch', 'class', 'deck',
-                           'embark_town', 'alone']
-    NUMERIC_COLUMNS = ['age', 'fare']
-
-    feature_columns = []
-    for feature_name in CATEGORICAL_COLUMNS:
-        vocabulary = dftrain[feature_name].unique()  # gets a list of all unique values from given feature column
-        feature_columns.append(tf.feature_column.categorical_column_with_vocabulary_list(feature_name, vocabulary))
-
-    for feature_name in NUMERIC_COLUMNS:
-        feature_columns.append(tf.feature_column.numeric_column(feature_name, dtype=tf.float32))
-
-    print(feature_columns)
-
-    train_input_fn = make_input_fn(dftrain,
-                                   y_train)  # here we will call the input_function that was returned to us to get a dataset object we can feed to the model
-    eval_input_fn = make_input_fn(dfeval, y_eval, num_epochs=1, shuffle=False)
-    linear_est = tf.estimator.LinearClassifier(feature_columns=feature_columns)
     linear_est.train(train_input_fn)  # train
-    result = linear_est.evaluate(eval_input_fn)  # get model metrics/stats by testing on tetsing data
 
+def calculateLinearRegression():
+    result = linear_est.evaluate(eval_input_fn)  # get model metrics/stats by testing on tetsing data
     clear_output()  # clears console output
     print(f'accuracy of the result {result["accuracy"]}')
     pred_dicts = list(linear_est.predict(eval_input_fn))
@@ -65,12 +66,11 @@ def calculateLinearRegression():
     plt.show()
     return probs
 
-app = Flask(__name__)
-
 @app.route("/")
 def hello_world():
     prediction = calculateLinearRegression()
-    return f"Prediction, {prediction}!"
+    return f"Predicted probabilities, {prediction}!"
 
 if __name__ == '__main__':
+    trainLinearRegression()
     app.run()
