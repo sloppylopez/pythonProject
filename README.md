@@ -9,12 +9,6 @@ It calculates the probability of surviving in the Titanic by age using linear re
 ####Deep Neural Network
 The network is trained to be able to recognize and translate hand-written
 
-###Init Project
-
-```sh
-pkillall -9 Python;python __init__.py
-```
-
 ###Useful Links
 
 https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.html#pandas.DataFrame.plot
