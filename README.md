@@ -1,5 +1,5 @@
 ###Init Project
 
 ```sh
-killall -9 Python;export FLASK_APP=controller;flask run
+pkillall -9 Python;python ./app/__init__.py
 ```

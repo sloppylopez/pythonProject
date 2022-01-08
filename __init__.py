@@ -1,5 +1,5 @@
 from flask import Flask, Response, render_template
-from app.linearRegressionService import calculateLinearRegression, trainLinearRegression
+from linearRegressionService import calculateLinearRegression, trainLinearRegression
 import io
 import random
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
