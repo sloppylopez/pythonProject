@@ -54,15 +54,15 @@ def trainDNN():
 
 
 def plotMetrics(training):
-    plt.subplot(2, 1, 1)
     # Plot the accuracy
+    plt.subplot(2, 1, 1)
     plt.plot(training.history['accuracy'])
     plt.title('Model Accuracy')
     plt.ylabel('accuracy')
     plt.xlabel('epoch')
     plt.legend(['train', 'val'], loc='lower right')
-    plt.subplot(2, 1, 2)
     # Plot the loss
+    plt.subplot(2, 1, 2)
     plt.plot(training.history['loss'])
     plt.title('Model Loss')
     plt.ylabel('loss')
@@ -87,5 +87,4 @@ def getPrediction(canvas_img):
     # Friendly print the input to double-check
     plt.imshow(x_test[0])
     plt.show()
-
     return prediction
