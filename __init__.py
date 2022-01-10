@@ -42,6 +42,11 @@ def linear_regression():
                            url='/static/images/new_plot.png')
 
 
+@app.route("/")
+def home():
+    return render_template('home.html')
+
+
 if __name__ == '__main__':
     trainLinearRegression()
     trainDNN()
