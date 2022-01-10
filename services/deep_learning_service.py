@@ -56,15 +56,15 @@ def trainDNN():
 def plotMetrics(training):
     fig = plt.figure(figsize=(8, 6))
     plt.subplot(2, 1, 1)
-    plt.plot(training.history['loss'])
+
     plt.plot(training.history['accuracy'])
     plt.title('Model Accuracy')
     plt.ylabel('accuracy')
     plt.xlabel('epoch')
     plt.legend(['train', 'val'], loc='lower right')
     plt.subplot(2, 1, 2)
+
     plt.plot(training.history['loss'])
-    plt.plot(training.history['accuracy'])
     plt.title('Model Loss')
     plt.ylabel('loss')
     plt.xlabel('epoch')
