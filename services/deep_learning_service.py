@@ -42,6 +42,8 @@ def trainDNN():
                       metrics=['accuracy'])
         # Train the model with 3 repetitions
         training = model.fit(x_train, y_train, epochs=3)
+        # Plotting the history metrics
+        plotMetrics(training)
         # Calculate validation loss anb validation accuracy
         val_loss, val_acc = model.evaluate(x_test, y_test)
         # Observe you don't have a huge delta, that means the model was over-fitted
@@ -50,28 +52,27 @@ def trainDNN():
         # Save the model
         model.save(model_name)
 
-    # plotting the metrics
-    if training:
-        fig = plt.figure(figsize=(8, 6))
-        plt.subplot(2, 1, 1)
-        plt.plot(training.history['loss'])
-        plt.plot(training.history['accuracy'])
-        plt.title('Model Accuracy')
-        plt.ylabel('accuracy')
-        plt.xlabel('epoch')
-        plt.legend(['train', 'val'], loc='lower right')
 
-        plt.subplot(2, 1, 2)
-        plt.plot(training.history['loss'])
-        plt.plot(training.history['accuracy'])
-        plt.title('Model Loss')
-        plt.ylabel('loss')
-        plt.xlabel('epoch')
-        plt.legend(['train', 'val'], loc='upper right')
+def plotMetrics(training):
+    fig = plt.figure(figsize=(8, 6))
+    plt.subplot(2, 1, 1)
+    plt.plot(training.history['loss'])
+    plt.plot(training.history['accuracy'])
+    plt.title('Model Accuracy')
+    plt.ylabel('accuracy')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'val'], loc='lower right')
+    plt.subplot(2, 1, 2)
+    plt.plot(training.history['loss'])
+    plt.plot(training.history['accuracy'])
+    plt.title('Model Loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'val'], loc='upper right')
+    plt.tight_layout()
+    plt.savefig(parent_dir + '/static/images/accuracy_dnn_num_reader.png')
+    plt.show()
 
-        plt.tight_layout()
-        plt.savefig(parent_dir + '/static/images/accuracy_dnn_num_reader.png')
-        plt.show()
 
 def getPrediction(canvas_img):
     print(f'Param received {canvas_img}')
