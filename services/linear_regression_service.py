@@ -1,4 +1,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
+
+import inspect
+
 from IPython.display import clear_output
 
 import pandas as pd
@@ -7,6 +10,8 @@ import tensorflow as tf  # now import the tensorflow module
 import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
 # Load dataset.
 dftrain = pd.read_csv('http://storage.googleapis.com/tf-datasets/titanic/train.csv')  # training data
 dfeval = pd.read_csv('http://storage.googleapis.com/tf-datasets/titanic/eval.csv')  # testing data
@@ -37,9 +42,11 @@ def make_input_fn(data_df, label_df, num_epochs=100, shuffle=True, batch_size=32
         return ds  # return a batch of the dataset
 
     return input_function  # return a function object for use
-# Create stimator
+# Create input function for train data
 train_input_fn = make_input_fn(dftrain,y_train)  # here we will call the input_function that was returned to us to get a dataset object we can feed to the model
+# Create input function for evaluation daya
 eval_input_fn = make_input_fn(dfeval, y_eval, num_epochs=1, shuffle=False)
+# Create linear estimator
 linear_est = tf.estimator.LinearClassifier(feature_columns=feature_columns)
 
 def trainLinearRegression():
@@ -54,8 +61,7 @@ def calculateLinearRegression():
     print(f'accuracy of the result {result["accuracy"]}')
     pred_dicts = list(linear_est.predict(eval_input_fn))
     probs = pd.Series([pred['probabilities'][1] for pred in pred_dicts])
-    colors = ['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'y', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b']
-    probs.plot(kind='hist', bins=20, title='predicted probabilities to survive in the Titanic by age', colors=colors)
-    # seaborn.barplot(probs.index, probs.values)
-    plt.savefig(basedir + '/static/images/new_plot.png')
+    cm = plt.get_cmap('Spectral')
+    probs.plot(kind='hist', bins=20, title='predicted probabilities to survive in the Titanic by age', colormap=cm)
+    plt.savefig(parent_dir + '/static/images/new_plot.png')
     plt.show()

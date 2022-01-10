@@ -16,6 +16,10 @@ The network is trained to be able to recognize and translate handwritten images 
 
 https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.plot.html#pandas.DataFrame.plot
 
+https://www.kaggle.com/jrreda/simple-digit-recognizer-with-keras-97
+
+https://www.kaggle.com/c/digit-recognizer/discussion/6366
+
 https://stackoverflow.com/questions/23333815/is-there-edit-and-continue-in-pycharm-reload-code-into-running-program-like-i
 
 https://dev.to/divporter/deploying-a-flask-app-to-aws-lambda-5em0
@@ -29,3 +33,7 @@ https://stackoverflow.com/questions/44649449/brew-installation-of-python-3-6-1-s
 https://www.youtube.com/watch?v=wQ8BIBpya2k
 
 https://www.youtube.com/watch?v=qFJeN9V1ZsI
+
+http://www.marcorpsa.com/ee/t1569.html
+
+https://www.kaggle.com/datasets
