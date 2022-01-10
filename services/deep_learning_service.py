@@ -21,27 +21,34 @@ current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfra
 parent_dir = os.path.dirname(current_dir)
 
 def trainDNN():
-    # if os.path.exists(model_name):
-    #     print("Skipping DNN training since", model_name, "already exists")
-    # else:
-    # Create a model (reference static/images/deepNeuralNetwork.png)
-    model = keras.models.Sequential()
-    # Flatten the tensor for better results in the model
-    model.add(tf.keras.layers.Flatten())
-    # Typical hidden layer 2
-    model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
-    # Typical hidden layer 2
-    model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
-    # We need a neuron per output and the softmax activation function to pick the higher weight in the last layer
-    model.add(tf.keras.layers.Dense(10, activation=tf.nn.softmax))
-    # Define parameters for the training of the model
-    model.compile(optimizer='adam',
-                  # `Adam` is a default optimizer, you could also use `stochastic gradient descent`
-                  # `*_categorical_crossentropy` is the go-to method to calculate loss, it can be used when we have 2 or more categories, it yields the same results as binary, hence it's better to use it as default
-                  loss='sparse_categorical_crossentropy',
-                  metrics=['accuracy'])
-    # Train the model with 3 repetitions
-    training = model.fit(x_train, y_train, epochs=3)
+    if os.path.exists(model_name):
+        print("Skipping DNN training since", model_name, "already exists")
+    else:
+        # Create a model (reference static/images/deepNeuralNetwork.png)
+        model = keras.models.Sequential()
+        # Flatten the tensor for better results in the model
+        model.add(tf.keras.layers.Flatten())
+        # Typical hidden layer 2
+        model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
+        # Typical hidden layer 2
+        model.add(tf.keras.layers.Dense(128, activation=tf.nn.relu))
+        # We need a neuron per output and the softmax activation function to pick the higher weight in the last layer
+        model.add(tf.keras.layers.Dense(10, activation=tf.nn.softmax))
+        # Define parameters for the training of the model
+        model.compile(optimizer='adam',
+                      # `Adam` is a default optimizer, you could also use `stochastic gradient descent`
+                      # `*_categorical_crossentropy` is the go-to method to calculate loss, it can be used when we have 2 or more categories, it yields the same results as binary, hence it's better to use it as default
+                      loss='sparse_categorical_crossentropy',
+                      metrics=['accuracy'])
+        # Train the model with 3 repetitions
+        training = model.fit(x_train, y_train, epochs=3)
+        # Calculate validation loss anb validation accuracy
+        val_loss, val_acc = model.evaluate(x_test, y_test)
+        # Observe you don't have a huge delta, that means the model was over-fitted
+        print(val_loss, val_acc)
+        print(x_train[0])
+        # Save the model
+        model.save(model_name)
 
     # plotting the metrics
     fig = plt.figure(figsize=(8, 6))
@@ -64,14 +71,6 @@ def trainDNN():
     plt.tight_layout()
     plt.savefig(parent_dir + '/static/images/accuracy_dnn_num_reader.png')
     plt.show()
-    # Calculate validation loss anb validation accuracy
-    val_loss, val_acc = model.evaluate(x_test, y_test)
-    # Observe you don't have a huge delta, that means the model was over-fitted
-    print(val_loss, val_acc)
-    print(x_train[0])
-    # Save the model
-    model.save(model_name)
-
 
 def getPrediction(canvas_img):
     print(f'Param received {canvas_img}')
