@@ -31,6 +31,7 @@ for feature_name in NUMERIC_COLUMNS:
 
 print(feature_columns)
 
+
 def make_input_fn(data_df, label_df, num_epochs=100, shuffle=True, batch_size=32):
     def input_function():  # inner function, this will be returned
         ds = tf.data.Dataset.from_tensor_slices(
@@ -42,18 +43,23 @@ def make_input_fn(data_df, label_df, num_epochs=100, shuffle=True, batch_size=32
         return ds  # return a batch of the dataset
 
     return input_function  # return a function object for use
+
+
 # Create input function for train data
-train_input_fn = make_input_fn(dftrain,y_train)  # here we will call the input_function that was returned to us to get a dataset object we can feed to the model
+train_input_fn = make_input_fn(dftrain,
+                               y_train)  # here we will call the input_function that was returned to us to get a dataset object we can feed to the model
 # Create input function for evaluation daya
 eval_input_fn = make_input_fn(dfeval, y_eval, num_epochs=1, shuffle=False)
 # Create linear estimator
 linear_est = tf.estimator.LinearClassifier(feature_columns=feature_columns)
+
 
 def trainLinearRegression():
     # Use a breakpoint in the code line below to debug your script.
     print(tf.version)  # make sure the version is 2.x
     print(tf.__version__)
     linear_est.train(train_input_fn)  # train
+
 
 def calculateLinearRegression():
     result = linear_est.evaluate(eval_input_fn)  # get model metrics/stats by testing on tetsing data
